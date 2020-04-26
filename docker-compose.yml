@@ -1,0 +1,29 @@
+version: '3'
+services:
+    mydbos1:
+        image: mysql:5.7
+        volumes:
+            - mysql_storage1:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: shivam
+            MYSQL_USER: shivam
+            MYSQL_PASSWORD: shivam
+            MYSQL_DATABASE: mydb1
+    mywpos1:
+        image: wordpress:5.1.1-php7.3-apache
+        volumes:
+            - wordpress_storage1:/var/www/html
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: mydbos1
+            WORDPRESS_DB_USER: shivam
+            WORDPRESS_DB_PASSWORD: shivam
+        ports:
+            - 8081:80
+        depends_on: 
+            - mydbos1
+volumes:
+    mysql_storage1:
+    wordpress_storage1:
+            
